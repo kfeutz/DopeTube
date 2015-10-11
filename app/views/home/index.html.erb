@@ -1,0 +1,41 @@
+<h1>DopeTube</h1>
+
+<div class="search-container" ng-app="YoutubeMp3">
+	<div class="col-sm-6">
+		<%= form_tag("/home/search", method: "get") do %>
+			<%= label_tag(:q, "Search for dope song mayng:") %>
+			<%= text_field_tag(:q) %>
+			<%= submit_tag("Search") %>
+		<% end %>
+	</div>
+	<%= form_tag("/home/download", method: "get")  do %>
+	<div class="col-sm-5">
+		<%= submit_tag "Add to \"Cart\"" %>
+	</div>
+	<div class="col-sm-1">
+		<button type="button" class="btn btn-default btn-lg">
+			<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Cart
+		</button>
+	</div>
+	<% @videos.each do |video| %>
+		<div class="container">
+			<div class="row">
+				<h2><%= video.title %></h2>
+				<!-- Embed video holder -->
+				<div class="col-sm-4 vid-container">
+			  		<iframe class="video" id="ytplayer" type="text/html"
+  					src="<%= video.embed_url %>"
+  					frameborder="0"></iframe>
+			  	</div>
+			  	<!-- Video title and description holder -->
+			  	<div class="col-sm-6">			  		
+			  		<p><%= video.description %></p>
+			  	</div>
+			  	<div class="col-sm-2">
+			  		<%= check_box_tag("video_ids[]", video.vid_id) %>
+			  	</div>
+			</div>
+		</div>
+	<% end %>
+	<% end %>
+</div>
