@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
+  resources :carts
+  resources :mp3s
   get 'download/index'
 
   get 'authz_controller/index'
   get 'home/index'
   get 'home/search', to: 'home#search'
-  get 'home/download', to: 'home#download'
+  get 'home/add_to_cart', to: 'home#add_to_cart'
   get 'search/', to: 'search#index' 
+  get 'cart/remove_videos', to: 'carts#remove_videos'
+  get 'cart/convert_videos', to: 'carts#convert_videos'
+  get 'cart/download_audio', to: 'carts#download_audio'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

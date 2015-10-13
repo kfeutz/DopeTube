@@ -3,6 +3,7 @@
   "dependencies": {
     "angular": "latest",
     "bootstrap-sass-official": "latest",
-    "bootstrap-toggle": "latest"
+    "bootstrap-toggle": "latest",
+    "jquery-labelauty": "latest"
   }
 }

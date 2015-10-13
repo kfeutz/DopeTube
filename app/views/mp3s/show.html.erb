@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @mp3.title %>
+</p>
+
+<p>
+  <strong>Artist:</strong>
+  <%= @mp3.artist %>
+</p>
+
+<p>
+  <strong>Length:</strong>
+  <%= @mp3.length %>
+</p>
+
+<p>
+  <strong>File size:</strong>
+  <%= @mp3.file_size %>
+</p>
+
+<p>
+  <strong>File format:</strong>
+  <%= @mp3.file_format %>
+</p>
+
+<p>
+  <strong>Download path:</strong>
+  <%= @mp3.download_path %>
+</p>
+
+<%= link_to 'Edit', edit_mp3_path(@mp3) %> |
+<%= link_to 'Back', mp3s_path %>

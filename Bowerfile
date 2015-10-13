@@ -1,3 +1,5 @@
 asset 'angular'
 asset 'bootstrap-sass-official'
 asset 'bootstrap-toggle'
+asset 'jquery-labelauty'
+asset 'bootstrap-toggle'

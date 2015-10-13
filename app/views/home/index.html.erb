@@ -8,14 +8,14 @@
 			<%= submit_tag("Search") %>
 		<% end %>
 	</div>
-	<%= form_tag("/home/download", method: "get")  do %>
-	<div class="col-sm-5">
+	<%= form_tag("/home/add_to_cart", method: "get")  do %>
+	<div class="col-sm-4">
 		<%= submit_tag "Add to \"Cart\"" %>
 	</div>
-	<div class="col-sm-1">
-		<button type="button" class="btn btn-default btn-lg">
+	<div class="col-sm-2">
+		<a href="/carts" roll="button" class="btn btn-default btn-lg">
 			<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Cart
-		</button>
+		</a>
 	</div>
 	<% @videos.each do |video| %>
 		<div class="container">
@@ -30,9 +30,13 @@
 			  	<!-- Video title and description holder -->
 			  	<div class="col-sm-6">			  		
 			  		<p><%= video.description %></p>
+			  		<b><%= video.duration %></b>
 			  	</div>
 			  	<div class="col-sm-2">
-			  		<%= check_box_tag("video_ids[]", video.vid_id) %>
+			  		<label>
+						<input type="checkbox" name="video_ids[]" value='<%= video.vid_id %>' data-toggle="toggle"><br>
+						Queue For Cart
+					</label>
 			  	</div>
 			</div>
 		</div>

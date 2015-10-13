@@ -1,0 +1,98 @@
+<div class="container">
+  <h1 class=" text-center">Your DopeTube cart</h1>
+  <p>
+    Welcome to your DopeTube cart. Here you'll see a mixture of video and audio files you have queued for download recently. The process is simple. In your Videos column, prompt a row to perform audio extraction on our smokin-hot servers. Once you're precious files have been converted, they'll appear in the Converted File column. From here, you can download the files directly to your own machine.
+  </p>
+
+  <!-- Table to list videos -->
+  <div class="col-md-6 col-sm-12">
+    <!-- Video panel with intro/some insightful text -->
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        Videos To Convert 
+      </div>
+      <div class="panel-body">
+        <p>This list contains YouTube videos that you have added to your cart. These bad boys are waiting here for you to convert to audio. So configure the options below and send these servers into overdrive. This may take some time though sir.</p>
+        <!-- Form to convert all videos from the cart -->
+        <button type="submit" class="btn btn-success btn-convert-vids">Convert Videos</button>
+        </form>
+        <!-- Form to delete all videos from the cart -->
+        <form action="/cart/remove_videos" method="get">
+          <input class="btn btn-danger" type="submit" value="Delete All">
+        </form>
+      </div>
+      <!-- Table holding videos queued for conversion-->
+      <table class="table table-striped">
+        <thead>
+          <!-- Labels for Video table -->
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loop through every video in cart -->
+          <% @cart_videos.each do |video| %>
+            <tr>
+              <td><%= video.title %></td>
+              <td><%= video.description %></td>
+              <td><%= video.duration %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div class="col-md-6 col-sm-12 text-left">
+    <!-- Audio panel with intro/some insightful text -->
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        Audio Files to Download
+      </div>
+      <div class="panel-body">
+        <p>Throw in some coo shplurb about audio files</p>
+        <!-- Form to convert all videos from the cart -->
+        <form action="/cart/download_audio" method="get">
+          <input class="btn btn-success" type="submit" value="Download Audio Files">
+        </form>
+      </div>
+      <!-- Table holding videos queued for conversion-->
+      <table class="table table-striped">
+        <thead>
+          <!-- Labels for Video table -->
+          <tr>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Album</th>
+            <th>Length</th>
+            <th>Format</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loop through every video in cart -->
+          <% @pending_mp3_downloads.each do |audio_file| %>
+            <tr>
+              <td><%= audio_file.title %></td>
+              <td>TODO</td>
+              <td>TODO</td>
+              <td>TODO</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+      
+  </div>
+
+
+  <!-- The popover content -->
+
+  <div id="popover" style="display: none">
+    <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+  </div>
+</div>

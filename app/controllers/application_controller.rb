@@ -5,17 +5,33 @@ require 'trollop'
 require 'open3'
 
 class ApplicationController < ActionController::Base
-	DEVELOPER_KEY = 'AIzaSyB4UDrhBocwoO7WqSkXk2Y3ZcyU9Sd9diY'
+    # Retrive the cart in each controller
+    before_action :get_cart_for_user
+
+	#Read API token for api access
+	DEVELOPER_KEY = api_token = File.read(Rails.root.to_s + "/youtube_auth_lock")
 	YOUTUBE_API_SERVICE_NAME = 'youtube'
 	YOUTUBE_API_VERSION = 'v3'
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  # Get the cart for the current user
+  def get_cart_for_user
+  	# Catch the error if a cart does not exist for the user
+  	begin
+  		@cart = Cart.first!
+  	rescue ActiveRecord::RecordNotFound
+  		@cart = Cart.create(
+  			:videos => [],
+  			:mp3s => []
+  		)
+  	end
+  end
+
 	def search_youtube(query)
 		search_string = query
-		#Read API token for api access
-		api_token = File.read(Rails.root.to_s + "/youtube_auth_lock")
 		vid_ids_from_search = query_to_youtube(search_string)
 		#Returns the JSON object as string
 		return vid_ids_from_search	
@@ -30,6 +46,22 @@ class ApplicationController < ActionController::Base
 		)	
 		youtube = client.discovered_api(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION)
 		return client, youtube
+	end
+
+	def retrieve_youtube_content_details(video_id)
+		client, youtube = get_service
+		begin
+			search_response = client.execute!(
+				:api_method => youtube.videos.list,
+				:parameters => {
+					:part => 'contentDetails',
+					:id => video_id
+				}
+			)
+			return search_response.data.items[0].contentDetails.duration
+		rescue Google::APIClient::TransmissionError => e
+			puts e.result.body
+		end
 	end
 
 	def query_to_youtube(search_query)
@@ -48,7 +80,8 @@ class ApplicationController < ActionController::Base
 				:parameters => {
 					:part => 'snippet',
 					:q => opts[:q],
-					:maxResults => opts[:max_results]
+					:maxResults => opts[:max_results],
+					:type => 'video'
 				}
 			)
 
@@ -61,7 +94,6 @@ class ApplicationController < ActionController::Base
 			search_response.data.items.each do |search_result|
 				case search_result.id.kind
 					when 'youtube#video'
-						puts(search_result)
 						videos << search_result
 					when 'youtube#channel'
 						channels << "#{search_result.snippet.title} (#{search_result.id.channelId})"
@@ -73,25 +105,6 @@ class ApplicationController < ActionController::Base
 			# puts "Videos:\n", videos, "\n"
 			# puts "Channels:\n", channels, "\n"
 			# puts "Playlists:\n", playlists, "\n"
-		rescue Google::APIClient::TransmissionError => e
-			puts e.result.body
-		end
-	end
-
-	def get_vids_from_ids(vid_id_array)
-		client, youtube = get_service
-		vid_titles = []
-		begin
-			vid_id_array.each do |vid_id|
-				search_response = client.execute!(
-					:api_method => youtube.videos.list,
-					:parameters => {
-						:part => 'snippet',
-						:id => vid_id
-					}
-				)
-				vid_titles << search_response.data.items[0].snippet.title
-			end
 		rescue Google::APIClient::TransmissionError => e
 			puts e.result.body
 		end

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  artist: MyString
+  length: MyString
+  file_size: MyString
+  file_format: MyString
+  download_path: MyString
+
+two:
+  title: MyString
+  artist: MyString
+  length: MyString
+  file_size: MyString
+  file_format: MyString
+  download_path: MyString

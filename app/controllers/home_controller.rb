@@ -2,7 +2,9 @@ class HomeController < ApplicationController
   @@videos = []
 
   def index
-
+    unless @videos
+      @videos = []
+    end
   end
 
   def search
@@ -16,32 +18,39 @@ class HomeController < ApplicationController
   def create_vids_from_youtube(youtube_vids)
   	vids = []
   	youtube_vids.each do |youtube_vid|
+      # This API call takes days
+      #duration = retrieve_youtube_content_details(youtube_vid.id.videoId)
+      #puts('Duration: ' + duration)
   		vids << Video.new(
   			:vid_id =>  youtube_vid.id.videoId,
   			:title => youtube_vid.snippet.title,
   			:description => youtube_vid.snippet.description,
-  			:embed_url => 'https://www.youtube.com/embed/' + youtube_vid.id.videoId.to_s
+  			:embed_url => 'https://www.youtube.com/embed/' + youtube_vid.id.videoId.to_s,
+        :duration => "N/A"
   		)
 	  end
 	  return vids
   end
 
   # Gather video objects and pass to download controller
-  def download
+  def add_to_cart
     vid_ids = params[:video_ids]
     # Save all video objects that will be downloaded
     @@videos.each do |video|
-      puts "YPOOOOO IJM HEREER "
+      # If selected video id matches id out of search result videos, add the videos to cart
       if vid_ids.include? video.vid_id
-        Video.create(
-          :vid_id =>  video.vid_id,
-          :title => video.title,
-          :description => video.description,
-          :embed_url => video.embed_url
-        )
+        @cart.videos <<
+          Video.create(
+            :vid_id =>  video.vid_id,
+            :title => video.title,
+            :description => video.description,
+            :embed_url => video.embed_url,
+            :duration => video.duration
+          )
+        
       end
     end
 
-    redirect_to download_index_url
+    redirect_to carts_url
   end
 end
