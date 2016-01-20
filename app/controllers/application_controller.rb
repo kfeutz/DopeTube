@@ -7,7 +7,7 @@ require 'open3'
 class ApplicationController < ActionController::Base
     # Retrive the cart in each controller
     before_action :get_cart_for_user
-
+  
 	#Read API token for api access
 	DEVELOPER_KEY = api_token = File.read(Rails.root.to_s + "/youtube_auth_lock")
 	YOUTUBE_API_SERVICE_NAME = 'youtube'
@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-
   # Get the cart for the current user
   def get_cart_for_user
   	# Catch the error if a cart does not exist for the user
@@ -67,7 +66,7 @@ class ApplicationController < ActionController::Base
 	def query_to_youtube(search_query)
 		opts = Trollop::options do
 			opt :q, 'Search term', :type => String, :default => search_query
-			opt :max_results, 'Max results', :type => :int, :default => 25
+			opt :max_results, 'Max results', :type => :int, :default => 10
 		end
 
 		client, youtube = get_service

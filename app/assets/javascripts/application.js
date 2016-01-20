@@ -12,9 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require jquery-labelauty/source/jquery-labelauty
 //= require bootstrap-sprockets
-//= require angular/angular
 //= require bootstrap-toggle/js/bootstrap-toggle
 //= require_tree .

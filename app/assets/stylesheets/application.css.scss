@@ -18,4 +18,20 @@
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap-sprockets";
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap";
 @import "bootstrap-toggle/css/bootstrap-toggle";
-@import "jquery-labelauty/source/jquery-labelauty"
+@import "jquery-labelauty/source/jquery-labelauty";
+
+
+.background-container {
+	background-image: url(image_path('brooklyn_bridge_at_night.jpg'));
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.top-navbar {
+	color: white;
+}
+
+.mdl-textfield__input {
+	border-bottom: 1px solid white;
+}

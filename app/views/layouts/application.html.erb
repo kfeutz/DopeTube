@@ -5,10 +5,53 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
-</head>
-<body>
 
-<%= yield %>
+  <!-- Material Design Lite -->
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.blue-indigo.min.css" /> 
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="background-container mdl-layout mdl-js-layout">
+
+<!-- Container for top navbar -->
+<header class="top-navbar mdl-layout__header mdl-layout__header--transparent">
+	<div class="mdl-layout__header-row">
+		<!-- Title -->
+		<span class="mdl-layout-title">
+			<a href="/">
+				<h1>DopeTube</h1>
+			</a>
+		</span>
+		<!-- Add spacer, to align navigation to the right -->
+		<div class="mdl-layout-spacer"></div>
+		<div class="col-sm-6">
+			
+			<!-- Expandable Textfield -->
+			<form action="/home/search">
+			  <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+			    <label class="mdl-button mdl-js-button mdl-button--icon" for="q">
+			      <i class="material-icons">search</i>
+			    </label>
+			    <div class="mdl-textfield__expandable-holder">
+			      <input class="search-input mdl-textfield__input" name="q" type="text" id="q"/>
+			      <label class="mdl-textfield__label" for="q">Search youtube</label>
+			    </div>
+			  </div>
+			</form>
+		</div>
+		<div class="col-sm-2">
+			<!-- Navigation -->
+			<nav class="mdl-navigation">
+				<a href="/carts" roll="button" class="btn btn-default btn-lg">
+					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Cart
+				</a>
+			</nav>
+		</div>
+	  
+	</div>
+</header>
+	<%= yield %>
 
 </body>
 </html>

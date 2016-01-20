@@ -34,7 +34,7 @@ class HomeController < ApplicationController
 
   # Gather video objects and pass to download controller
   def add_to_cart
-    vid_ids = params[:video_ids]
+    vid_ids = params[:video_id]
     # Save all video objects that will be downloaded
     @@videos.each do |video|
       # If selected video id matches id out of search result videos, add the videos to cart

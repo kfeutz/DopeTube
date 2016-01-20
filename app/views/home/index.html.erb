@@ -1,33 +1,71 @@
-<h1>DopeTube</h1>
-
 <div class="search-container" ng-app="YoutubeMp3">
-	<div class="col-sm-6">
-		<%= form_tag("/home/search", method: "get") do %>
-			<%= label_tag(:q, "Search for dope song mayng:") %>
-			<%= text_field_tag(:q) %>
-			<%= submit_tag("Search") %>
-		<% end %>
-	</div>
-	<%= form_tag("/home/add_to_cart", method: "get")  do %>
-	<div class="col-sm-4">
-		<%= submit_tag "Add to \"Cart\"" %>
-	</div>
-	<div class="col-sm-2">
-		<a href="/carts" roll="button" class="btn btn-default btn-lg">
-			<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Cart
-		</a>
-	</div>
+	<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+	    <div class="video-cell mdl-card mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone">
+	    	<div class="mdl-card__media">
+	      		<iframe class="video" id="ytplayer" type="text/html"
+  					src="https://www.youtube.com/embed/lDoLLhswOwY"
+  					frameborder="0"></iframe>
+  			</div>
+  			<div class="mdl-card__actions slider-container">
+  				<input class="mdl-slider mdl-js-slider" type="range"
+  					min="0" max="100" value="0" tabindex="0"/>
+  			</div>
+	    </div>
+	    <div class="info-cell mdl-card mdl-cell mdl-cell--8-col-desktop mdl-cell--5-col-tablet mdl-cell--3-col-phone">
+	      <div class="mdl-card__supporting-text">
+	        <h4>Features</h4>
+	        Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
+	      </div>
+	    </div>
+	    <div class="info-cell mdl-card mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone">
+			<button class="add-to-cart-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add" data-upgraded=",MaterialButton,MaterialRipple">
+				<i class="material-icons" role="presentation">add</i>
+				<span class="visuallyhidden">Add</span>
+				<span class="mdl-button__ripple-container">
+					<span class="mdl-ripple is-animating" style="width: 160.392px; height: 160.392px; transform: translate(-50%, -50%) translate(22px, 31px);"></span>
+				</span>
+			</button>
+	    </div>
+	</section>
 	<% @videos.each do |video| %>
-		<div class="container">
+		<div class="video-row" id="<%= video.vid_id %>">
+			<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+			    <div class="video-cell mdl-card mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone">
+			    	<div class="mdl-card__media">
+			      		<iframe class="video" id="ytplayer" type="text/html"
+		  					src="<%= video.embed_url %>"
+		  					frameborder="0"></iframe>
+		  			</div>
+		  			<div class="mdl-card__actions slider-container">
+		  				<input class="mdl-slider mdl-js-slider" type="range"
+		  					min="0" max="100" value="0" tabindex="0"/>
+		  			</div>
+			    </div>
+			    <div class="info-cell mdl-card mdl-cell mdl-cell--8-col-desktop mdl-cell--5-col-tablet mdl-cell--3-col-phone">
+			      <div class="mdl-card__supporting-text">
+			        <h4><%= video.title %></h4>
+			        <%= video.description %>
+			      </div>
+			    </div>
+			    <div class="info-cell mdl-card mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone">
+					<button class="add-to-cart-btn mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="<%= video.vid_id %>" data-upgraded=",MaterialButton,MaterialRipple">
+						<i class="material-icons" role="presentation">add</i>
+						<span class="visuallyhidden">Add</span>
+						<span class="mdl-button__ripple-container">
+							<span class="mdl-ripple is-animating" style="width: 160.392px; height: 160.392px; transform: translate(-50%, -50%) translate(22px, 31px);"></span>
+						</span>
+					</button>
+			    </div>
+			</section>
+		</div>
+		<!-- <div class="container">
 			<div class="row">
 				<h2><%= video.title %></h2>
-				<!-- Embed video holder -->
 				<div class="col-sm-4 vid-container">
 			  		<iframe class="video" id="ytplayer" type="text/html"
   					src="<%= video.embed_url %>"
   					frameborder="0"></iframe>
 			  	</div>
-			  	<!-- Video title and description holder -->
 			  	<div class="col-sm-6">			  		
 			  		<p><%= video.description %></p>
 			  		<b><%= video.duration %></b>
@@ -39,7 +77,6 @@
 					</label>
 			  	</div>
 			</div>
-		</div>
-	<% end %>
+		</div> -->
 	<% end %>
 </div>

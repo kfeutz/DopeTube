@@ -5,60 +5,36 @@
   </p>
 
   <!-- Table to list videos -->
-  <div class="col-md-6 col-sm-12">
+  <div class="col-sm-12">
     <!-- Video panel with intro/some insightful text -->
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-videos">
       <!-- Default panel contents -->
       <div class="panel-heading">
         Videos To Convert 
       </div>
       <div class="panel-body">
         <p>This list contains YouTube videos that you have added to your cart. These bad boys are waiting here for you to convert to audio. So configure the options below and send these servers into overdrive. This may take some time though sir.</p>
-        <!-- Form to convert all videos from the cart -->
-        <button type="submit" class="btn btn-success btn-convert-vids">Convert Videos</button>
-        </form>
-        <!-- Form to delete all videos from the cart -->
-        <form action="/cart/remove_videos" method="get">
-          <input class="btn btn-danger" type="submit" value="Delete All">
-        </form>
-      </div>
-      <!-- Table holding videos queued for conversion-->
-      <table class="table table-striped">
-        <thead>
-          <!-- Labels for Video table -->
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Loop through every video in cart -->
-          <% @cart_videos.each do |video| %>
-            <tr>
-              <td><%= video.title %></td>
-              <td><%= video.description %></td>
-              <td><%= video.duration %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  
-  <div class="col-md-6 col-sm-12 text-left">
-    <!-- Audio panel with intro/some insightful text -->
-    <div class="panel panel-default">
-      <!-- Default panel contents -->
-      <div class="panel-heading">
-        Audio Files to Download
-      </div>
-      <div class="panel-body">
-        <p>Throw in some coo shplurb about audio files</p>
-        <!-- Form to convert all videos from the cart -->
-        <form action="/cart/download_audio" method="get">
-          <input class="btn btn-success" type="submit" value="Download Audio Files">
-        </form>
+        <div class="col-sm-6">
+          <!-- Form to convert all videos from the cart -->
+          <button class="btn btn-success btn-convert-vids">Convert Videos</button>
+          </form>
+          <!-- Form to delete all videos from the cart -->
+          <form action="/cart/remove_videos" method="get">
+            <input class="btn btn-danger" type="submit" value="Delete All">
+          </form>
+        </div>
+        <div class="col-sm-6">
+          <div class="dropdown">
+            <p>Convert to:</p>
+            
+            <select name="download_format" id="audioFormatDropdown">
+              <option value="m4a">m4a</option>
+              <option value="mp3">mp3</option>
+              <option value="opus">opus</option>
+              <option value="wav">wav</option>
+            </select>
+          </div>
+        </div>
       </div>
       <!-- Table holding videos queued for conversion-->
       <table class="table table-striped">
@@ -68,22 +44,87 @@
             <th>Title</th>
             <th>Artist</th>
             <th>Album</th>
-            <th>Length</th>
-            <th>Format</th>
+            <th>Duration</th>
           </tr>
         </thead>
         <tbody>
           <!-- Loop through every video in cart -->
-          <% @pending_mp3_downloads.each do |audio_file| %>
-            <tr>
-              <td><%= audio_file.title %></td>
-              <td>TODO</td>
-              <td>TODO</td>
-              <td>TODO</td>
+          <% @cart_videos.each do |video| %>
+            <tr class="video-row">
+              <td class="video-title">
+                <input type="text" name="title" value="<%= video.title %>">
+              </td>
+              <td> <input type="text" name="artist"> </td>
+              <td> <input type="text" name="album"> </td>
+              <td><%= video.duration %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
+    </div>
+  </div>
+  
+  <div class="col-sm-12 text-left">
+    <!-- Audio panel with intro/some insightful text -->
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        Audio Files to Download
+      </div>
+      <!-- Form to convert all videos from the cart -->
+      <form id="downloadAudioForm" action="/cart/download_audio" method="get">
+        <div class="panel-body">
+          <p>Throw in some coo shplurb about audio files</p>
+          
+            <input class="btn btn-success btn-download-audio" type="submit" value="Download Audio Files">
+
+        </div>
+        <!-- Table holding videos queued for conversion-->
+        <table class="table table-striped">
+          <thead>
+            <!-- Labels for Video table -->
+            <tr>
+              <th>Title</th>
+              <th>Artist</th>
+              <th>Album</th>
+              <th>Length</th>
+              <th>Format</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row to append download-in-progress items to -->
+            <tr class="top_progress_file_row">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <!-- Row to append new items to -->
+            <tr class="top_audio_file_row">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <!-- Loop through every video in cart -->
+            <% @cart_mp3s.each do |audio_file| %>
+              <tr id="audioFileRow">
+                <td>
+                  <input type="text" name="file_names[]" value='<%= audio_file.title %>'>
+                </td>
+                <td>
+                  <input type="text" name="artist_names[]" placeholder='artist'>
+                </td>
+                <td>
+                  <input type="text" name="album_names[]" placeholder='album'>
+                </td>
+                <td>TODO</td>
+                <td><%= audio_file.file_format %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </form>
     </div>
       
   </div>
